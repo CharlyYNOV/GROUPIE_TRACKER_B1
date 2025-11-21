@@ -15,7 +15,7 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.ServeFile(w, r, "./templates/acceuil.html")
+	http.ServeFile(w, r, "./templates/accueil.html")
 }
 
 func main() {
@@ -24,9 +24,9 @@ func main() {
 	http.HandleFunc("/", homePage)
 	http.HandleFunc("/acceuil.html", homePage)
 
-	// Fichiers statiques (servir depuis le dossier page_web)
-	http.Handle("/style.css", http.FileServer(http.Dir("./static/css")))
-	http.Handle("/script.js", http.FileServer(http.Dir("./static/script")))
+	// Fichiers statiques
+	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./static/css"))))
+	http.Handle("/script/", http.StripPrefix("/script/", http.FileServer(http.Dir("./static/script"))))
 	// Images et autres ressources statiques
 	http.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("./static/images"))))
 
