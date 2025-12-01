@@ -19,6 +19,7 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 
 	tmpl, err := template.ParseFiles("./templates/accueil.html")
 	if err != nil {
+		log.Printf("Error parsing template: %v", err)
 		http.Error(w, "Error while loading page", http.StatusInternalServerError)
 		return
 	}
@@ -28,23 +29,22 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 		displayArtists = displayArtists[:10]
 	}
 
-	data := struct{ Artists []internals.Artist }{Artists: displayArtists}
-
-	err = tmpl.Execute(w, data)
-	if err != nil {
-		http.Error(w, "Error while displaying page", http.StatusInternalServerError)
-		return
-	}
-
 	displayLocations := internals.Locations
 	if len(displayArtists) > 3 {
 		displayLocations = displayLocations[:3]
 	}
 
-	data2 := struct{ Locations []internals.Location }{Locations: displayLocations}
+	data := struct {
+		Artists   []internals.Artist
+		Locations []internals.Location
+	}{
+		Artists:   displayArtists,
+		Locations: displayLocations,
+	}
 
-	err = tmpl.Execute(w, data2)
+	err = tmpl.Execute(w, data)
 	if err != nil {
+		log.Printf("Error executing template: %v", err)
 		http.Error(w, "Error while displaying page", http.StatusInternalServerError)
 		return
 	}
@@ -52,8 +52,8 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	internals.Main_api()
+
 	// Routes HTML
-	// la racine (/) sert la page d'accueil ; garder le chemin explicite pour compatibilité
 	http.HandleFunc("/", homePage)
 	http.HandleFunc("/acceuil.html", homePage)
 	http.HandleFunc("/templates/viewAllArtists.html", homePage)
@@ -61,7 +61,6 @@ func main() {
 	// Fichiers statiques
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./static/css"))))
 	http.Handle("/script/", http.StripPrefix("/script/", http.FileServer(http.Dir("./static/script"))))
-	// Images et autres ressources statiques
 	http.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("./static/images"))))
 
 	// Permet de remplacer le port
