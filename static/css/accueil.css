@@ -80,7 +80,7 @@ nav .groupie_artists .nav-link:hover {
 
 .back-grad {
   background: #40241f;
-  background: linear-gradient(135deg,rgba(64, 36, 31, 1) 0%, rgba(0, 0, 0, 1) 54%);
+  background: linear-gradient(135deg,rgb(48, 31, 64) 0%, rgba(0, 0, 0, 1) 54%);
   height: 100%;
 }
 
@@ -96,7 +96,7 @@ nav .groupie_artists .nav-link:hover {
 
 #TYFs h4 {
   display: flex;
-  color: #E86B4A;
+  color: #774ae8;
   align-items: center;
   gap: 5px;
   margin: 0;
@@ -159,18 +159,18 @@ p.grey-text {
 }
 
 .search-input:focus {
-  border-color: #E86B4A;
-  box-shadow: 0 /* décalage x */ 0 /* décalage y */ 0 /* effet de flou */ 3px /* étalement */ #40241f;
+  border-color: #774ae8;
+  box-shadow: 0 /* décalage x */ 0 /* décalage y */ 0 /* effet de flou */ 3px /* étalement */ #2e1f40;
 }
 
 .submit-button {
   color: #f9fafb;
-  background-color: #E86B4A;
+  background-color: #774ae8;
   width: auto;
   min-width: 100px;
   gap: 8px; 
   cursor: pointer;
-  border: 2px solid #40241f;
+  border: 2px solid #301f40;
   transition: background-color 0.5s;
   border-radius: 8px;
 
@@ -182,7 +182,7 @@ p.grey-text {
 }
 
 .submit-button:hover {
-  background-color: #d15a3a;
+  background-color: #623dbd;
 }
 
 .icon-submit {
@@ -283,12 +283,12 @@ p.grey-text {
 }
 
 .artists-carousel::-webkit-scrollbar-thumb { /* truc pour scroll*/
-  background: #E86B4A;
+  background: #774ae8;
   border-radius: 4px;
 }
 
 .artists-carousel::-webkit-scrollbar-thumb:hover {
-  background: #d15a3a;
+  background: #863ad1;
 }
 
 /* ==================================================
