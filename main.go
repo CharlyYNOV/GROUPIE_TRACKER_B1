@@ -56,6 +56,7 @@ func main() {
 	// la racine (/) sert la page d'accueil ; garder le chemin explicite pour compatibilité
 	http.HandleFunc("/", homePage)
 	http.HandleFunc("/acceuil.html", homePage)
+	http.HandleFunc("/templates/viewAllArtists.html", homePage)
 
 	// Fichiers statiques
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./static/css"))))
