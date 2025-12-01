@@ -29,4 +29,6 @@ structures anonymes : https://blog.boot.dev/golang/anonymous-structs-golang
 https://pkg.go.dev/html/template
 
 https://uiverse.io/Ans453/calm-cheetah-47
+
 https://shields.io/badges
+https://readme-workflows.github.io/Readme-Icons/icons/octicons/
