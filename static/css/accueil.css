@@ -191,3 +191,167 @@ p.grey-text {
   height: 20px;
   flex-shrink: 0;
 }
+/* ==================================================
+   "Artistes-accueil"'S STYLE
+   ================================================== */ 
+
+.Artistes-accueil {
+  background: #2222227e;
+  margin: 40px 20px 5px 20px;
+  border-radius: 8px;
+  height: auto;
+}
+
+/* ==================================================
+   "title-h3"'S STYLE
+   ================================================== */ 
+
+
+.title-h3 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* margin: 40px 20px 5px 20px;*/
+  border-radius: 8px;
+  background: #222;
+  background: linear-gradient(135deg,rgba(34, 34, 34, 1) 0%, rgb(8, 8, 8) 100%);
+  align-items: center;
+}
+.title-h3 h3{
+  margin: 10px;
+  color: white;
+  font-size: 30px; 
+  line-height: 36px; 
+  font-weight: 700;
+}
+
+.title-h3 button {
+  margin: 10px;
+  color: rgb(255, 255, 255);
+  background-color: #22222200;
+  line-height: 36px; 
+  border-radius: 8px;
+}
+
+.title-h3 button p {
+  margin: 5px;
+  font-size: 20px;
+  font-weight: 200;
+}
+
+/* ==================================================
+   "artists"'S STYLE
+   ================================================== */ 
+
+.Artistes-accueil.artists-container.artists {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  width: auto;
+  max-height: fit-content;
+  background: #222;
+}
+
+/* ==================================================
+   "artists carousel"'S STYLE
+   ================================================== */ 
+
+.carousel-package {
+  position: relative;
+  width: 100%;
+}
+
+.artists-carousel {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: flex;
+  gap: 1em;
+  padding: 2em 1em;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.artists-carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.artists-carousel::-webkit-scrollbar-track { /*fond de la barre de scroll*/
+  background: #333;
+  border-radius: 4px;
+}
+
+.artists-carousel::-webkit-scrollbar-thumb { /* truc pour scroll*/
+  background: #E86B4A;
+  border-radius: 4px;
+}
+
+.artists-carousel::-webkit-scrollbar-thumb:hover {
+  background: #d15a3a;
+}
+
+/* ==================================================
+   "artists cards"' STYLE
+   ================================================== */ 
+
+.artists-card {
+  flex: 0 0 20em;
+  min-width: 20em;
+  aspect-ratio: 5 / 5;
+  background-color: #222;
+  padding: 1em;
+  border-radius: 8px;
+  text-align: center;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+  color: white;
+  overflow: hidden;
+  position: relative; 
+}
+
+.artists-card:hover {
+  cursor: pointer;
+}
+
+.artist-image {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  opacity: 1;
+  transition: all 0.4s;
+}
+
+.artist-image img {
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover;
+}
+
+.artists-card:hover .artist-image {
+  opacity: 0;
+}
+
+.artist-info {
+  position: absolute; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  opacity: 0;
+  transition: all 0.6s;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+}
+
+.artists-card:hover .artist-info {
+  opacity: 1;
+}

@@ -32,11 +32,11 @@
                 </svg>Track Your Favorites
             </h4>
         </div>
-
         
         <div id="NMBs">
             <p class="grey-text">Never miss a beat. Follow your favorite artists and discover their upcoming concerts near you.</p>
         </div>
+
         <div class="search-bar">
             <form class="search-form">
                 <div class="input-container">
@@ -50,6 +50,46 @@
                     <p>Search</p>
                 </button>
             </form>
+        </div>
+
+        <div class="Artistes-accueil">
+            <div class="title-h3">
+                <h3>Artists</h3>
+                <button><p>View All</p></button>
+            </div>
+
+            <div class="carousel-package">
+                <div class="artists-carousel">
+                    {{range .Artists}}
+                    <div class="artists-card">
+                        <div class="artist-image">
+                            <img src="{{.Image}}" alt="{{.Name}}">
+                        </div>
+                        <div class="artist-info">
+                            <h3>{{.Name}}</h3>
+                            <p class="creation-date">Since {{.CreationDate}}</p>
+                            <p class="members-count">{{len .Members}} member(s)</p>
+                            <p class="first-album">First Album: {{.FirstAlbum}}</p>
+                        </div>
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+
+        <div class="Artistes-accueil">
+            <div class="title-h3">
+                <h3>Upcoming Concerts</h3>
+                <button><p>See All Events</p></button>
+            </div>
+
+            <div class="carousel-package">
+                <div class="dates-carousel">
+                    {{range .Locations}}
+                    
+                    {{end}}
+                </div>
+            </div>
         </div>
     </div>
 </body>
