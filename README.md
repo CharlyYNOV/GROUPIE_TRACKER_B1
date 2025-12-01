@@ -4,7 +4,7 @@
 <img src="https://img.shields.io/badge/Platform-Linux%20Windows-lightgrey" alt="Platform" />
 
 ## Description
-**Groupie Tracker** est une application web permettant de suivre vos groupes de musique préférés. Découvrez les membres des groupes, leurs dates de création, le premier album, ainsi que les dates et lieux de leurs prochains concerts.
+Groupie Tracker est une application web permettant de suivre vos groupes de musique préférés. Découvrez les membres des groupes, leurs dates de création, le premier album, ainsi que les dates et lieux de leurs prochains concerts.
 
 ---
 ## Technologies utilisées 
