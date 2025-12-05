@@ -67,11 +67,11 @@ func viewAllArtistsPage(w http.ResponseWriter, r *http.Request) {
 
 	search_input := r.URL.Query().Get("search")
 
+	artists := internals.Artists
 	if search_input != "" {
-		internals.Artists = internals.FilterArtists(internals.Artists, search_input)
+		artists = internals.FilterArtists(artists, search_input)
 	}
-
-	data := struct{ Artists []internals.Artist }{Artists: internals.Artists}
+	data := struct{ Artists []internals.Artist }{Artists: artists}
 
 	err = tmpl.Execute(w, data)
 	if err != nil {

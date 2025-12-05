@@ -39,9 +39,9 @@
         </div>
 
         <div class="search-bar">
-            <form class="search-form">
+            <form class="search-form" action="/search" method="POST">
                 <div class="input-container">
-                    <input required placeholder="Search artists, venues, or cities..." class="search-input" id="text-search" type="text"/>
+                    <input required placeholder="Search artists..." class="search-input" id="text-search" type="text" name="search-bar"/>
                 </div>
 
                 <button class="submit-button" type="submit">
@@ -81,6 +81,7 @@
         <div class="Artistes-accueil">
             <div class="title-h3">
                 <h3>Upcoming Concerts</h3>
+                
                 <button><p>See All Events</p></button>
             </div>
 

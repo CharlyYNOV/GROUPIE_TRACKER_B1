@@ -44,13 +44,6 @@ func FilterArtists(artists []Artist, input string) []Artist {
 			filtered = append(filtered, artist)
 			continue
 		}
-
-		for _, member := range artist.Members {
-			if strings.Contains(strings.ToLower(member), input) {
-				filtered = append(filtered, artist)
-				break
-			}
-		}
 	}
 
 	return filtered
