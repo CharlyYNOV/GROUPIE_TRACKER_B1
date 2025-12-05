@@ -65,6 +65,12 @@ func viewAllArtistsPage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	search_input := r.URL.Query().Get("search")
+
+	if search_input != "" {
+		internals.Artists = internals.FilterArtists(internals.Artists, search_input)
+	}
+
 	data := struct{ Artists []internals.Artist }{Artists: internals.Artists}
 
 	err = tmpl.Execute(w, data)
@@ -107,6 +113,7 @@ func main() {
 	http.HandleFunc("/acceuil.html", homePage)
 	http.HandleFunc("/artists", viewAllArtistsPage)
 	http.HandleFunc("/concerts", concerts)
+	http.HandleFunc("/search", internals.SearchBar)
 
 	// Fichiers statiques
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./static/css"))))

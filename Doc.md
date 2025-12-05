@@ -40,3 +40,5 @@ https://css-tricks.com/introduction-fr-css-unit/
 https://www.geeksforgeeks.org/css/css-grid-layout-the-fr-unit/ -> The fr unit is a fractional unit, an input that automatically calculates layout divisions when adjusting for gaps inside the grid.
 
 https://stackoverflow.com/questions/23282311/parse-input-from-html-form
+http://stackoverflow.com/questions/35934298/ddg#35934496
+https://pkg.go.dev/net/http#StatusSeeOther
