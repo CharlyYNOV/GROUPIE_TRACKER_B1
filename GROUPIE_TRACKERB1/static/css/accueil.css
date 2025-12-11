@@ -1,0 +1,387 @@
+/* ====================================================================================================
+   HOME PAGE'S STYLE
+   ==================================================================================================== */ 
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #333;
+  font-family: Arial, sans-serif;
+}
+
+html {
+  height: 100%;
+}
+
+/* ==================================================
+   NAVIGATION BAR
+   ================================================== */
+
+#container-groupie_title {
+  position: sticky;
+  top: 0;
+  padding: 5px 5px;
+  z-index: 1000;    
+} 
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px 40px;
+  border-radius: 4px;
+  background: #222;
+  background: linear-gradient(135deg,rgba(34, 34, 34, 1) 0%, rgb(8, 8, 8) 100%);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+
+
+nav .groupie_title h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+nav .groupie_title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+nav .groupie_artists {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav .groupie_artists .nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+nav .groupie_artists .nav-link:hover {
+  background: #444;
+}
+
+/* ==================================================
+   "GRADIENT DE FOND"'S STYLE
+   ================================================== */
+
+.back-grad {
+  background: #40241f;
+  background: linear-gradient(135deg,rgb(48, 31, 64) 0%, rgba(0, 0, 0, 1) 54%);
+}
+
+/* ==================================================
+   "TRACK YOUR FAVORITES"'S STYLE
+   ================================================== */
+
+#TYFs {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-left: 20px;
+}
+
+#TYFs h4 {
+  display: flex;
+  color: #774ae8;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+}
+
+#TYFs h4 svg {
+  color: inherit;
+}
+/* ==================================================
+   "NEVER MISS A BEAT"'S STYLE
+   ================================================== */
+
+#NMBs {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-family: system-ui;
+  margin-left: 20px;
+}
+
+p.grey-text {
+  margin: 0;
+  color: #a6a6a6;
+}
+
+/* ==================================================
+   "SEARCH-BAR"'S STYLE
+   ================================================== */ 
+
+.search-form {
+  display: flex;
+  align-items: center;
+  max-width: 512px;
+  margin-top: 5px;
+  margin-left: 20px; 
+  margin-right: auto;
+  margin-bottom: 5px;
+  gap: 5px;
+}
+
+.input-container {
+  position: relative;
+  width: 100%;
+
+}
+
+.search-input {
+  background-color: #353535;
+  color: #2e1a16;
+  font-size: 14px;
+  border-radius: 8px;
+  display: block;
+  width: 100%;
+  padding: 10px 10px 10px 10px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+.search-input:focus {
+  border-color: #774ae8;
+  box-shadow: 0 /* décalage x */ 0 /* décalage y */ 0 /* effet de flou */ 3px /* étalement */ #2e1f40;
+}
+
+.submit-button {
+  color: #f9fafb;
+  background-color: #774ae8;
+  width: auto;
+  min-width: 100px;
+  gap: 8px; 
+  cursor: pointer;
+  border: 2px solid #301f40;
+  transition: background-color 0.5s;
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  flex-direction: row-reverse;
+}
+
+.submit-button:hover {
+  background-color: #623dbd;
+}
+
+.icon-submit {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+} 
+/* ==================================================
+   "Artistes-accueil"'S STYLE
+   ================================================== */ 
+
+.Artistes-accueil {
+  background: #2222227e;
+  margin: 40px 20px 5px 20px;
+  border-radius: 8px;
+  height: auto;
+}
+
+/* ==================================================
+   "title-h3"'S STYLE
+   ================================================== */ 
+
+
+.title-h3 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* margin: 40px 20px 5px 20px;*/
+  border-radius: 8px;
+  background: #222;
+  background: linear-gradient(135deg,rgba(34, 34, 34, 1) 0%, rgb(8, 8, 8) 100%);
+  align-items: center;
+}
+.title-h3 h3{
+  margin: 10px;
+  color: white;
+  font-size: 30px; 
+  line-height: 36px; 
+  font-weight: 700;
+}
+
+.title-h3 button {
+  margin: 10px;
+  color: rgb(255, 255, 255);
+  background-color: #22222200;
+  line-height: 36px; 
+  border-radius: 8px;
+}
+
+.title-h3 button p {
+  margin: 5px;
+  font-size: 20px;
+  font-weight: 200;
+}
+
+/* ==================================================
+   "artists"'S STYLE
+   ================================================== */ 
+
+.Artistes-accueil.artists-container.artists {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  width: auto;
+  max-height: fit-content;
+  background: #222;
+}
+
+/* ==================================================
+   "artists carousel"'S STYLE
+   ================================================== */ 
+
+.carousel-package {
+  position: relative;
+  width: 100%;
+}
+
+.artists-carousel {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: flex;
+  gap: 1em;
+  padding: 2em 1em;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.artists-carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.artists-carousel::-webkit-scrollbar-track { /*fond de la barre de scroll*/
+  background: #333;
+  border-radius: 4px;
+}
+
+.artists-carousel::-webkit-scrollbar-thumb { /* truc pour scroll*/
+  background: #774ae8;
+  border-radius: 4px;
+}
+
+.artists-carousel::-webkit-scrollbar-thumb:hover {
+  background: #863ad1;
+}
+
+/* ==================================================
+   "artists cards"' STYLE
+   ================================================== */ 
+
+.artists-card {
+  flex: 0 0 20em;
+  min-width: 20em;
+  aspect-ratio: 5 / 5;
+  background-color: #222;
+  padding: 1em;
+  border-radius: 8px;
+  text-align: center;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+  color: white;
+  overflow: hidden;
+  position: relative; 
+}
+
+.artists-card:hover {
+  cursor: pointer;
+}
+
+.artist-image {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  opacity: 1;
+  transition: all 0.4s;
+}
+
+.artist-image img {
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover;
+}
+
+.artists-card:hover .artist-image {
+  opacity: 0;
+}
+
+.artist-info {
+  position: absolute; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  opacity: 0;
+  transition: all 0.6s;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+}
+
+.artists-card:hover .artist-info {
+  opacity: 1;
+}
+
+.auto-complete-list {
+  position: absolute;
+  display: none;
+  min-height: 280px;
+  overflow: auto;
+  background-color: #fff;
+  width: 100%;
+  left: 0;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 3px;
+
+}
+
+.auto-complete-list li {
+  padding: 10px 25px;
+  list-style: none;
+  font-size: 18px;
+
+}
+
+.auto-complete-list li:hover {
+  cursor: pointer;
+  background-color: linear-gradient(135deg,rgba(34, 34, 34, 1) 0%, rgb(8, 8, 8) 100%);
+  border-radius: 4px;
+  
+}
