@@ -23,7 +23,16 @@
                 <div class="search-bar">
                     <form class="search-form" action="/search" method="POST">
                         <div class="input-container">
-                            <input required placeholder="Search artists..." class="search-input" id="text-search" type="text" name="search-bar"/>
+                            <input required placeholder="Search artists..." class="search-input" id="text-search" type="text" name="search-bar" list="suggestions-list" autocomplete="off"/>
+                    
+                            <datalist id="suggestions-list">
+                                {{range $artist := .Artists}}
+                                <option value="{{$artist.Name}}">{{$artist.Name}}</option>
+                                {{range $artist.Members}}
+                                <option value="{{.}}">{{.}} (member of {{$artist.Name}})</option>
+                                {{end}}
+                                {{end}}
+                            </datalist>
                         </div>
 
                         <button class="submit-button" type="submit">
@@ -34,6 +43,7 @@
                         </button>
                     </form>
                 </div>
+                
                 <ul class="groupie_artists">
                     <li><a href="/" class="nav-link">Accueil</a></li>
                     <li><a href="/artists" class="nav-link">Artistes</a></li>

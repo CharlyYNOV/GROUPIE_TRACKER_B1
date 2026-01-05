@@ -234,6 +234,11 @@ p.grey-text {
   background-color: #22222200;
   line-height: 36px; 
   border-radius: 8px;
+  cursor: pointer;
+}
+
+.title-h3 button:hover {
+  cursor: pointer;
 }
 
 .title-h3 button p {

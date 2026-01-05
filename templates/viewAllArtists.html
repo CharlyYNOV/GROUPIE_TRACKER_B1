@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +7,7 @@
     <title>Groupie Tracker</title>
     <link rel="stylesheet" href="/css/accueil.css">
     <link rel="stylesheet" href="/css/viewAllArtists.css">
+  
 </head>
 
 <body>
@@ -21,19 +20,18 @@
                     </h1>
                 </div>
                 <div class="search-bar">
-                    <form class="search-form" action="/artists?q={{.SearchQuery}}" method="GET">
+                    <form class="search-form" action="/search" method="POST">
                         <div class="input-container">
-                            <input placeholder="Search artists..." class="search-input" id="text-search" type="text" name="q" value="{{.SearchQuery}}" autocomplete="off"/>
+                            <input required placeholder="Search artists..." class="search-input" id="text-search" type="text" name="search-bar" list="suggestions-list" autocomplete="off"/>
                             
-                            {{if .Suggestions}}
-                            <div class="auto-complete-list">
-                                {{range .Suggestions}}
-                                <a href="/artists?search={{.}}">
-                                    <li>{{.}}</li>
-                                </a>
+                            <datalist id="suggestions-list">
+                                {{range $artist := .Artists}}
+                                <option value="{{$artist.Name}}">{{$artist.Name}}</option>
+                                {{range $artist.Members}}
+                                <option value="{{.}}">{{.}} (member of {{$artist.Name}})</option>
                                 {{end}}
-                            </div>
-                            {{end}}
+                                {{end}}
+                            </datalist>
                         </div>
 
                         <button class="submit-button" type="submit">
@@ -44,6 +42,7 @@
                         </button>
                     </form>
                 </div>
+
                 <ul class="groupie_artists">
                     <li><a href="/" class="nav-link">Accueil</a></li>
                     <li><a href="/artists" class="nav-link">Artistes</a></li>
@@ -63,10 +62,29 @@
                         </div>
                         <div class="artist-info">
                             <h3 onclick="window.location.href='/artists?search=' + encodeURIComponent('{{.Name}}')">{{.Name}}</h3>
-                            <p class="creation-date" onclick="window.location.href='/artists?search=' + encodeURIComponent('{{.Name}}')">Since {{.CreationDate}}</p>
-                            <p class="members-count" onclick="window.location.href='/artists?search=' + encodeURIComponent('{{.Name}}')">{{len .Members}} member(s)</p>
-                            <p class="first-album" onclick="window.location.href='/artists?search=' + encodeURIComponent('{{.Name}}')">First Album: {{.FirstAlbum}}</p>
-                        </div>
+                            <p class="creation-date">Since {{.CreationDate}}</p>
+                            <p class="members-count">{{len .Members}} member(s)</p>
+                            <p class="first-album">First Album: {{.FirstAlbum}}</p>
+                            
+                            <details class="map-section">
+                                <summary>Voir les lieux de concerts</summary>
+                                <div class="maps-wrapper">
+                                    {{range .Locations}}
+                                        <div class="map-container">
+                                            <p>📍 {{.}}</p>
+                                            <iframe 
+                                                width="100%" 
+                                                height="150" 
+                                                frameborder="0" 
+                                                style="border:0; border-radius: 5px;"
+                                                src="https://maps.google.com/maps?q={{.}}&t=&z=10&ie=UTF8&iwloc=&output=embed"
+                                                allowfullscreen>
+                                            </iframe>
+                                        </div>
+                                    {{end}}
+                                </div>
+                            </details>
+                            </div>
                     </div>
                     {{end}}
                 </div>
