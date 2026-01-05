@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/static/images/image.png"/>
+    <title>{{ArtistPage.Name}}</title>
+    <link rel="stylesheet" href="/static/css/artist.css">
+    <link rel="stylesheet" href="/static/css/accueil.css">
+</head>
+
+<body>
+    <div class="back-grad">
+        <div id="container-groupie_title">
+            <nav>
+                <div class="groupie_title">
+                    <h1>
+                        <a href="/">GROUPIE TRACKER</a>
+                    </h1>
+                </div>
+                <div class="search-bar">
+                    <form class="search-form" action="/search" method="POST">
+                        <div class="input-container">
+                            <input required placeholder="Search artists..." class="search-input" id="text-search" type="text" name="search-bar"/>
+                        </div>
+
+                        <button class="submit-button" type="submit">
+                            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="icon-submit">
+                                <path d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor"></path>
+                            </svg>
+                            <p>Search</p>
+                        </button>
+                    </form>
+                </div>
+                <ul class="groupie_artists">
+                    <li><a href="/" class="nav-link">Accueil</a></li>
+                    <li><a href="/artists" class="nav-link">Artistes</a></li>
+                    <li><a href="/concerts" class="nav-link">Évènements</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="artist-profile">
+            <div class="artist-header">
+                <img class="artist-image" src="{{ ArtistPage.Image }}" alt="{{ ArtistPage.Name }}">
+                <h2 class="artist-name">{{ artist.Name }}</h2>
+            </div>
+            <div class="artist-details">
+                <h3>Biographie</h3>
+                <p>{{ ArtistPage.biography }}</p>
+                <p class="creation-date">Since {{ArtistPage.CreationDate}}</p>
+                <p class="members-count">{{len ArtistPage.Members}} member(s)</p>
+                <p class="first-album">First Album: {{ArtistPage.FirstAlbum}}</p>
+            </div>
+        </div>
+    </div>
+</body>
