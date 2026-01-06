@@ -16,6 +16,7 @@ func main() {
 	http.HandleFunc("/", controler.HomePage)
 	http.HandleFunc("/acceuil.html", controler.HomePage)
 	http.HandleFunc("/artists", controler.ViewAllArtistsPage)
+	http.HandleFunc("/artist", controler.ArtistPage)
 	http.HandleFunc("/concerts", controler.Concerts)
 	http.HandleFunc("/search", internals.SearchBar)
 

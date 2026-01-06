@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/static/images/image.png"/>
-    <title>{{ArtistPage.Name}}</title>
+    <title>{{ .ArtistPage.Name }}</title>
     <link rel="stylesheet" href="/static/css/artist.css">
     <link rel="stylesheet" href="/static/css/accueil.css">
 </head>
@@ -54,15 +54,13 @@
 
         <div class="artist-profile">
             <div class="artist-header">
-                <img class="artist-image" src="{{ ArtistPage.Image }}" alt="{{ ArtistPage.Name }}">
-                <h2 class="artist-name">{{ artist.Name }}</h2>
+                <img class="artist-image" src="{{ .ArtistPage.Image }}" alt="{{ .ArtistPage.Name }}">
+                <h2 class="artist-name">{{ .ArtistPage.Name }}</h2>
             </div>
             <div class="artist-details">
-                <h3>Biographie</h3>
-                <p>{{ ArtistPage.biography }}</p>
-                <p class="creation-date">Since {{ArtistPage.CreationDate}}</p>
-                <p class="members-count">{{len ArtistPage.Members}} member(s)</p>
-                <p class="first-album">First Album: {{ArtistPage.FirstAlbum}}</p>
+                <p class="creation-date">Since {{ .ArtistPage.CreationDate }}</p>
+                <p class="members-count">{{len .ArtistPage.Members}} member(s)</p>
+                <p class="first-album">First Album: {{ .ArtistPage.FirstAlbum }}</p>
             </div>
         </div>
     </div>

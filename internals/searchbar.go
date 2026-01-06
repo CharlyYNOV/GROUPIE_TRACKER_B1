@@ -33,10 +33,10 @@ func SearchBar(w http.ResponseWriter, r *http.Request) {
 
 // Cette fonction retourne une liste avec tous les artistes comportant le nom [input] dans l'input
 // mais aussi tous les groupes contenant le nom [input] dans leur liste de membres
-func FilterArtists(artists []Artist, input string) []Artist {
+func FilterArtists(artists []Artist, input string) ([]Artist, bool) {
 	input = strings.ToLower(strings.TrimSpace(input))
 	if input == "" {
-		return artists
+		return artists, true
 	}
 
 	var filtered []Artist
@@ -47,7 +47,11 @@ func FilterArtists(artists []Artist, input string) []Artist {
 		}
 	}
 
-	return filtered
+	if len(filtered) == 0 {
+		return nil, false
+	}
+
+	return filtered, true
 }
 
 // GetSearchSuggestions retourne jusqu'à 3 suggestions basées sur l'input de l'utilisateur
@@ -93,8 +97,4 @@ func GetSearchSuggestions(input string) []string {
 	}
 
 	return suggestions
-}
-
-func FilterMember(artist []Artist) {
-
 }

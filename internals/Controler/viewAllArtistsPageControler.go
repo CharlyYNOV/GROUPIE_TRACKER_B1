@@ -27,7 +27,7 @@ func ViewAllArtistsPage(w http.ResponseWriter, r *http.Request) {
 
 	artists := internals.Artists
 	if search_input != "" {
-		artists = internals.FilterArtists(artists, search_input)
+		artists, _  = internals.FilterArtists(artists, search_input)
 	}
 
 	// Récupérer les suggestions

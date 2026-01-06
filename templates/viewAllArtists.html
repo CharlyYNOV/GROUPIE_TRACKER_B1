@@ -58,10 +58,10 @@
                     {{range .Artists}}
                     <div class="artists-card">
                         <div class="artist-image">
-                            <img onclick="window.location.href='/artists?search=' + encodeURIComponent('{{.Name}}')" src="{{.Image}}" alt="{{.Name}}">
+                            <img onclick="window.location.href='/artist?id={{.Id}}'" src="{{.Image}}" alt="{{.Name}}">
                         </div>
                         <div class="artist-info">
-                            <h3 onclick="window.location.href='/artists?search=' + encodeURIComponent('{{.Name}}')">{{.Name}}</h3>
+                            <h3 onclick="window.location.href='/artist?id={{.Id}}'">{{.Name}}</h3>
                             <p class="creation-date">Since {{.CreationDate}}</p>
                             <p class="members-count">{{len .Members}} member(s)</p>
                             <p class="first-album">First Album: {{.FirstAlbum}}</p>
