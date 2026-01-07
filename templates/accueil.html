@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/static/images/image.png"/>
     <title>Groupie Tracker</title>
-    <link rel="stylesheet" href="/static/css/concerts.css">
     <link rel="stylesheet" href="/static/css/accueil.css">
 
 </head>
@@ -76,13 +73,25 @@
                     {{range .DisplayArtists}}
                     <div class="artists-card">
                         <div class="artist-image">
-                            <img onclick="window.location.href='/artists?search=' + encodeURIComponent('{{.Name}}')" src="{{.Image}}" alt="{{.Name}}">
+                            <img onclick="window.location.href='/artist?id={{.Id}}'" src="{{.Image}}" alt="{{.Name}}">
                         </div>
                         <div class="artist-info">
-                            <h3>{{.Name}}</h3>
-                            <p class="creation-date" onclick="window.location.href='/artists?search=' + encodeURIComponent('{{.Name}}')">Since {{.CreationDate}}</p>
-                            <p class="members-count" onclick="window.location.href='/artists?search=' + encodeURIComponent('{{.Name}}')">{{len .Members}} member(s)</p>
-                            <p class="first-album" onclick="window.location.href='/artists?search=' + encodeURIComponent('{{.Name}}')">First Album: {{.FirstAlbum}}</p>
+                            <h3 onclick="window.location.href='/artist?id={{.Id}}'">{{.Name}}</h3>
+                            <p class="creation-date" onclick="window.location.href='/artist?id={{.Id}}'">Since {{.CreationDate}}</p>
+                            <p class="members-count" onclick="window.location.href='/artist?id={{.Id}}'">{{len .Members}} member(s)</p>
+                            <p class="first-album" onclick="window.location.href='/artist?id={{.Id}}'">First Album: {{.FirstAlbum}}</p>
+                            
+                            <details class="map-section">
+                                <summary>Voir les lieux de concerts</summary>
+                                <div class="maps-wrapper">
+                                    {{range .LocationsList}}
+                                        <div class="map-container">
+                                        <p>📍 {{.}}</p>
+                                        <iframe width="100%" height="150" frameborder="0" style="border:0; border-radius:5px;" src="https://maps.google.com/maps?q={{.}}&t=&z=10&ie=UTF8&iwloc=&output=embed" allowfullscreen></iframe>
+                                        </div>
+                                    {{end}}
+                                </div>
+                            </details>
                         </div>
                     </div>
                     {{end}}

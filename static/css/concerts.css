@@ -19,10 +19,9 @@ h6 {
 }
 
 .searchBox {
-    position: absolute;
-    top: 135%;
-    left: 70%;
-    transform: translate(-50%, 50%);
+    position: relative;
+    width: fit-content;
+    margin: 20px auto;
     background: #ffc107;
     height: 40px;
     border-radius: 40px;
@@ -58,12 +57,12 @@ h6 {
     background: none;
     outline: none;
     float: left;
-    padding: 0;
-    color: white;
+    padding: 0 6px;
+    color: #333;
     font-size: 16px;
     transition: 0.4s;
     line-height: 40px;
-    width: 0px;
+    width: 240px;
     font-family: 'Concert One', cursive;
 }
 
@@ -168,7 +167,7 @@ header ul li a {
 .contact-in {
     width: 80%;
     height: auto;
-    margin: auto;
+    margin: 30px auto;
     display: flex;
     flex-wrap: wrap;
     padding: 10px;

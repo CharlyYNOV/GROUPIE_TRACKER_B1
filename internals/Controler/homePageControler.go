@@ -32,13 +32,21 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 		displayLocations = displayLocations[:3]
 	}
 
+	var displayArtistsWithLocs []ArtistWithLocations
+	for _, a := range displayArtists {
+		displayArtistsWithLocs = append(displayArtistsWithLocs, ArtistWithLocations{
+			Artist:        a,
+			LocationsList: internals.GetArtistLocations(a.Id),
+		})
+	}
+
 	data := struct {
 		Artists        []internals.Artist
-		DisplayArtists []internals.Artist
+		DisplayArtists []ArtistWithLocations
 		Locations      []internals.Location
 	}{
-		Artists:        internals.Artists, // TOUS les artistes pour le datalist
-		DisplayArtists: displayArtists,    // Seulement 10 pour l'affichage
+		Artists:        internals.Artists,
+		DisplayArtists: displayArtistsWithLocs,
 		Locations:      displayLocations,
 	}
 
