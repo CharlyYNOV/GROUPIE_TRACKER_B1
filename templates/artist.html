@@ -54,10 +54,10 @@
 
         <div class="artist-profile">
             <div class="artist-header">
-                <img class="artist-image" src="{{ .ArtistPage.Image }}" alt="{{ .ArtistPage.Name }}">
                 <h2 class="artist-name">{{ .ArtistPage.Name }}</h2>
             </div>
             <div class="artist-details">
+                <img class="artist-image" src="{{ .ArtistPage.Image }}" alt="{{ .ArtistPage.Name }}">
                 <p class="creation-date">Since {{ .ArtistPage.CreationDate }}</p>
                 <p class="first-album">First Album: {{ .ArtistPage.FirstAlbum }}</p>
                 <p class="members-count">{{ len .ArtistPage.Members }} member(s)</p>
