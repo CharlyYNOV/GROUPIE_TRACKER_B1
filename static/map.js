@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+
     const mapElement = document.getElementById('map');
     
     // recupérer données html
@@ -29,4 +29,4 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-});
+    
