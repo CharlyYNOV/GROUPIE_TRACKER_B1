@@ -8,7 +8,56 @@ import (
 	"strings"
 )
 
-// Cette fonction redirige vers la page de l'artiste demandé
+// --- LES DEUX FONCTIONS QUI MANQUAIENT ---
+
+// FilterArtists filtre la liste des artistes selon l'entrée
+func FilterArtists(artists []Artist, input string) ([]Artist, bool) {
+	input = strings.ToLower(strings.TrimSpace(input))
+	if input == "" {
+		return artists, true
+	}
+
+	var filtered []Artist
+	for _, artist := range artists {
+		if strings.Contains(strings.ToLower(artist.Name), input) {
+			filtered = append(filtered, artist)
+		}
+	}
+
+	if len(filtered) == 0 {
+		return nil, false
+	}
+	return filtered, true
+}
+
+// GetSearchSuggestions retourne des suggestions basées sur l'input
+func GetSearchSuggestions(input string) []string {
+	input = strings.ToLower(strings.TrimSpace(input))
+	if input == "" {
+		return []string{}
+	}
+
+	var suggestions []string
+	seen := make(map[string]bool)
+
+	for _, artist := range Artists {
+		if strings.Contains(strings.ToLower(artist.Name), input) {
+			if !seen[artist.Name] {
+				suggestions = append(suggestions, artist.Name)
+				seen[artist.Name] = true
+			}
+		}
+	}
+
+	sort.Strings(suggestions)
+	if len(suggestions) > 3 {
+		suggestions = suggestions[:3]
+	}
+	return suggestions
+}
+
+// --- TA FONCTION SEARCHBAR (DÉJÀ OK) ---
+
 func SearchBar(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -23,78 +72,20 @@ func SearchBar(w http.ResponseWriter, r *http.Request) {
 	}
 
 	searchInput := strings.TrimSpace(r.PostFormValue("search-bar"))
-	if searchInput == "" {
-		http.Redirect(w, r, "/artists", http.StatusSeeOther)
-		return
-	}
+	encodedInput := url.QueryEscape(searchInput)
+	referer := r.Referer()
 
-	http.Redirect(w, r, "/artists?search="+url.QueryEscape(searchInput), http.StatusSeeOther)
-}
-
-// Cette fonction retourne une liste avec tous les artistes comportant le nom [input] dans l'input
-// mais aussi tous les groupes contenant le nom [input] dans leur liste de membres
-func FilterArtists(artists []Artist, input string) ([]Artist, bool) {
-	input = strings.ToLower(strings.TrimSpace(input))
-	if input == "" {
-		return artists, true
-	}
-
-	var filtered []Artist
-	for _, artist := range artists {
-		if strings.Contains(strings.ToLower(artist.Name), input) {
-			filtered = append(filtered, artist)
-			continue
+	if strings.Contains(referer, "/concerts") {
+		if searchInput == "" {
+			http.Redirect(w, r, "/concerts", http.StatusSeeOther)
+		} else {
+			http.Redirect(w, r, "/concerts?search="+encodedInput, http.StatusSeeOther)
+		}
+	} else {
+		if searchInput == "" {
+			http.Redirect(w, r, "/artists", http.StatusSeeOther)
+		} else {
+			http.Redirect(w, r, "/artists?search="+encodedInput, http.StatusSeeOther)
 		}
 	}
-
-	if len(filtered) == 0 {
-		return nil, false
-	}
-
-	return filtered, true
-}
-
-// GetSearchSuggestions retourne jusqu'à 3 suggestions basées sur l'input de l'utilisateur
-func GetSearchSuggestions(input string) []string {
-	input = strings.ToLower(strings.TrimSpace(input))
-	if input == "" {
-		return []string{}
-	}
-
-	var suggestions []string
-	seenSuggestions := make(map[string]bool)
-
-	// Chercher dans les noms d'artistes
-	for _, artist := range Artists {
-		artistName := artist.Name
-		if strings.Contains(strings.ToLower(artistName), input) {
-			if !seenSuggestions[artistName] {
-				suggestions = append(suggestions, artistName)
-				seenSuggestions[artistName] = true
-			}
-		}
-	}
-
-	// Chercher dans les membres
-	for _, artist := range Artists {
-		for _, member := range artist.Members {
-			if strings.Contains(strings.ToLower(member), input) {
-				suggestion := member + " (member of " + artist.Name + ")"
-				if !seenSuggestions[suggestion] {
-					suggestions = append(suggestions, suggestion)
-					seenSuggestions[suggestion] = true
-				}
-			}
-		}
-	}
-
-	// Trier par ordre alphabétique
-	sort.Strings(suggestions)
-
-	// Limiter à 3 suggestions
-	if len(suggestions) > 3 {
-		suggestions = suggestions[:3]
-	}
-
-	return suggestions
 }

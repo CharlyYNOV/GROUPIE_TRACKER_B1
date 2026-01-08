@@ -1,32 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Groupie Tracker - Évènements</title>
-    
-    <link rel="stylesheet" href="/css/concerts.css">
     <link rel="stylesheet" href="/css/accueil.css">
-
+    <link rel="stylesheet" href="/css/concerts.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-     
     <style>
-        #map { 
-            height: 700px; 
-            width: 95%; 
-            margin: 20px auto; 
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            z-index: 1; 
-        }
-        #container-groupie_title {
-            position: relative;
-            z-index: 1000;
-        }
+        #map { height: 700px; width: 95%; margin: 20px auto; border-radius: 15px; border: 2px solid #333; z-index: 1; }
+        #container-groupie_title { position: relative; z-index: 1000; }
     </style>
 </head>
-
 <body>
     <div id="container-groupie_title">
         <nav>
@@ -34,32 +18,15 @@
                 <h1><a href="/">GROUPIE TRACKER</a></h1>
             </div>
             <div class="search-bar">
-                    <form class="search-form" action="/search" method="POST">
-                        <div class="input-container">
-                            <input required placeholder="Search artists..." class="search-input" id="text-search" type="text" name="search-bar" list="suggestions-list" autocomplete="off"/>
-                    
-                            <datalist id="suggestions-list">
-                                {{range $artist := .Artists}}
-                                <option value="{{$artist.Name}}">{{$artist.Name}}</option>
-                                {{range $artist.Members}}
-                                <option value="{{.}}">{{.}} (member of {{$artist.Name}})</option>
-                                {{end}}
-                                {{end}}
-                            </datalist>
-                        </div>
-
-                        <button class="submit-button" type="submit">
-                            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="icon-submit">
-                                <path d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor"></path>
-                            </svg>
-                            <p>Search</p>
-                        </button>
-                    </form>
-                </div>
+                <form class="search-form" action="/search" method="POST">
+                    <input required placeholder="Rechercher un artiste..." id="text-search" type="text" name="search-bar"/>
+                    <button type="submit">Search</button>
+                </form>
+            </div>
             <ul class="groupie_artists">
-                <li><a href="/" class="nav-link">Accueil</a></li>
-                <li><a href="/artists" class="nav-link">Artistes</a></li>
-                <li><a href="/concerts" class="nav-link">Évènements</a></li>
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/artists">Artistes</a></li>
+                <li><a href="/concerts">Évènements</a></li>
             </ul>
         </nav>
     </div>
@@ -71,31 +38,28 @@
         document.addEventListener('DOMContentLoaded', function() {
             var mapElement = document.getElementById('map');
             var rawData = mapElement.getAttribute('data-markers');
-
-            // initialisation map
-            var map = L.map('map').setView([40, 10], 3);
-
+            
+            // Initialisation Map
+            var map = L.map('map').setView([20, 0], 2);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
                 attribution: '&copy; OpenStreetMap'
             }).addTo(map);
 
-    
             try {
                 var markers = JSON.parse(rawData);
-                if (Array.isArray(markers)) {
+                if (markers && markers.length > 0) {
+                    var group = new L.featureGroup();
                     markers.forEach(function(loc) {
-                        if (loc.lat !== 0) {
-                            var cityDisplay = loc.city.replace(/_/g, ' ').replace(/-/g, ', ');
-                            L.marker([loc.lat, loc.lng])
-                                .addTo(map)
-                                .bindPopup(`<b>${loc.artist}</b><br>${cityDisplay}`);
-                        }
+                        var city = loc.city.replace(/_/g, ' ').replace(/-/g, ', ');
+                        var m = L.marker([loc.lat, loc.lng])
+                                 .addTo(map)
+                                 .bindPopup("<b>"+loc.artist+"</b><br>"+city);
+                        group.addLayer(m);
                     });
+                    // Si on a filtré un artiste, on zoome sur ses concerts
+                    map.fitBounds(group.getBounds(), {padding: [50, 50]});
                 }
-            } catch (e) {
-                console.error("Erreur JSON:", e);
-            }
+            } catch (e) { console.error("JSON Error", e); }
         });
     </script>
 </body>

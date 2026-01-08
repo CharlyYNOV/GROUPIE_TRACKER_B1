@@ -12,11 +12,10 @@ type ArtistWithLocations struct {
 	LocationsList []string
 }
 
-// Nouvelle route pour la page des Artistes
 func ViewAllArtistsPage(w http.ResponseWriter, r *http.Request) {
+	// On ignore le POST car SearchBar s'occupe de la redirection vers GET
 	if r.Method == "POST" {
 		r.ParseForm()
-		w.WriteHeader(http.StatusOK)
 		return
 	}
 
@@ -27,39 +26,43 @@ func ViewAllArtistsPage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// 1. RÉCUPÉRATION DE L'INPUT (Correction : on lit le paramètre ?search= de l'URL)
 	search_input := r.URL.Query().Get("search")
-	// searchQuery := search_input
 
 	artists := internals.Artists
-	if search_input != "" {
-		artists, _ = internals.FilterArtists(artists, search_input)
-	}
+	found := true
 
-	// Récupérer les suggestions
-	// suggestions := internals.GetSearchSuggestions(searchQuery)
+	// 2. FILTRAGE (Correction : on vérifie si FilterArtists renvoie des résultats)
+	if search_input != "" {
+		artists, found = internals.FilterArtists(artists, search_input)
+	}
 
 	var artistsWithLocs []ArtistWithLocations
-	for _, a := range artists {
-		artistsWithLocs = append(artistsWithLocs, ArtistWithLocations{
-			Artist:        a,
-			LocationsList: internals.GetArtistLocations(a.Id),
-		})
+
+	// 3. BOUCLE SÉCURISÉE (Correction : on n'ajoute que si 'found' est vrai et 'artists' non nil)
+	if found && artists != nil {
+		for _, a := range artists {
+			artistsWithLocs = append(artistsWithLocs, ArtistWithLocations{
+				Artist:        a,
+				LocationsList: internals.GetArtistLocations(a.Id),
+			})
+		}
 	}
 
+	// 4. DONNÉES SYNCHRONISÉES (On utilise search_input pour les suggestions et la query)
 	data := struct {
 		Artists     []ArtistWithLocations
 		Suggestions []string
 		SearchQuery string
 	}{
 		Artists:     artistsWithLocs,
-		Suggestions: internals.GetSearchSuggestions(search_input), // garde une seule variable
+		Suggestions: internals.GetSearchSuggestions(search_input),
 		SearchQuery: search_input,
 	}
 
 	err = tmpl.Execute(w, data)
 	if err != nil {
 		log.Printf("Error executing template: %v", err)
-		http.Error(w, "Error while displaying page", http.StatusInternalServerError)
 		return
 	}
 }

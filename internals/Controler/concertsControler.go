@@ -14,6 +14,9 @@ func Concerts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Récupération du terme de recherche (?search=...)
+	query := r.URL.Query().Get("search")
+
 	tmpl, err := template.ParseFiles("./templates/concerts.html")
 	if err != nil {
 		log.Printf("Error parsing template: %v", err)
@@ -21,10 +24,9 @@ func Concerts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// On appelle la fonction de internals pour avoir le JSON de la map
-	markers := internals.GetMarkersJSON()
+	// Génération du JSON filtré par Go
+	markers := internals.GetMarkersJSON(query)
 
-	// On prépare les données pour le template
 	data := struct {
 		Artists     []internals.Artist
 		Locations   []internals.Location

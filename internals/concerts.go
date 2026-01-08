@@ -3,6 +3,7 @@ package internals
 import (
 	"encoding/json"
 	"html/template"
+	"strings"
 )
 
 // Dictionnaire complet de toutes les localisations de ton JSON
@@ -104,13 +105,11 @@ type MapMarker struct {
 	Lng    float64 `json:"lng"`
 }
 
-// Cette fonction prépare le JSON pour le contrôleur
-func GetMarkersJSON() template.HTML {
+func GetMarkersJSON(query string) template.HTML {
 	var finalMarkers []MapMarker
+	query = strings.ToLower(strings.TrimSpace(query))
 
-	// On boucle sur les localisations déjà chargées dans ton package internals
 	for _, locItem := range Locations {
-		// On trouve le nom de l'artiste correspondant
 		var artistName string
 		for _, a := range Artists {
 			if a.Id == locItem.Id {
@@ -119,7 +118,11 @@ func GetMarkersJSON() template.HTML {
 			}
 		}
 
-		// Pour chaque ville de cet artiste, on cherche ses coordonnées
+		// Filtre Go : On n'ajoute que si le nom correspond
+		if query != "" && !strings.Contains(strings.ToLower(artistName), query) {
+			continue
+		}
+
 		for _, locName := range locItem.Locations {
 			if coords, ok := CityCoords[locName]; ok {
 				finalMarkers = append(finalMarkers, MapMarker{
