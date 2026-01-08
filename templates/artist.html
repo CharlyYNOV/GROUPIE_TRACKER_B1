@@ -59,14 +59,13 @@
             </div>
             <div class="artist-details">
                 <p class="creation-date">Since {{ .ArtistPage.CreationDate }}</p>
-                <p class="members-count">{{len .ArtistPage.Members}} member(s)</p>
                 <p class="first-album">First Album: {{ .ArtistPage.FirstAlbum }}</p>
-            </div>
-            <div class="members-section">
-                <h3>Members</h3>
+                <p class="members-count">{{ len .ArtistPage.Members }} member(s)</p>
                 <div class="members-list">
-                    {{range .ArtistPage.Members}}
-                    <div class="member-item">{{.}}</div>
+                    {{ range .ArtistPage.Members }}
+                    <div class="member-item" style="color: #9ca3af;">
+                        {{ . }}
+                    </div>
                     {{end}}
                 </div>
             </div>

@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// Dictionnaire complet de toutes les localisations de ton JSON
+// yes we have hardcode :)
 var CityCoords = map[string][2]float64{
 	"north_carolina-usa": {35.7596, -79.0193}, "georgia-usa": {33.7490, -84.3880},
 	"los_angeles-usa": {34.0522, -118.2437}, "saitama-japan": {35.8617, 139.6455},
@@ -118,7 +118,6 @@ func GetMarkersJSON(query string) template.HTML {
 			}
 		}
 
-		// Filtre Go : On n'ajoute que si le nom correspond
 		if query != "" && !strings.Contains(strings.ToLower(artistName), query) {
 			continue
 		}

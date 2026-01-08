@@ -9,6 +9,8 @@
     <style>
         #map { height: 700px; width: 95%; margin: 20px auto; border-radius: 15px; border: 2px solid #333; z-index: 1; }
         #container-groupie_title { position: relative; z-index: 1000; }
+        /* Style de secours pour la barre si le CSS ne charge pas */
+        .search-form { display: flex; gap: 10px; justify-content: center; padding: 10px; }
     </style>
 </head>
 <body>
@@ -19,8 +21,10 @@
             </div>
             <div class="search-bar">
                 <form class="search-form" action="/search" method="POST">
-                    <input required placeholder="Rechercher un artiste..." id="text-search" type="text" name="search-bar"/>
-                    <button type="submit">Search</button>
+                    <input required placeholder="Rechercher..." class="search-input" id="text-search" type="text" name="search-bar"/>
+                    <button class="submit-button" type="submit">Search</button>
+                    <a href="/concerts" style="text-decoration: none; color: #666; font-size: 13px; margin-left: 10px; align-self: center;">
+                supprimer la recherche
                 </form>
             </div>
             <ul class="groupie_artists">
@@ -39,27 +43,29 @@
             var mapElement = document.getElementById('map');
             var rawData = mapElement.getAttribute('data-markers');
             
-            // Initialisation Map
             var map = L.map('map').setView([20, 0], 2);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap'
             }).addTo(map);
 
+            setTimeout(function(){ map.invalidateSize() }, 400);
+
             try {
-                var markers = JSON.parse(rawData);
-                if (markers && markers.length > 0) {
-                    var group = new L.featureGroup();
-                    markers.forEach(function(loc) {
-                        var city = loc.city.replace(/_/g, ' ').replace(/-/g, ', ');
-                        var m = L.marker([loc.lat, loc.lng])
-                                 .addTo(map)
-                                 .bindPopup("<b>"+loc.artist+"</b><br>"+city);
-                        group.addLayer(m);
-                    });
-                    // Si on a filtré un artiste, on zoome sur ses concerts
-                    map.fitBounds(group.getBounds(), {padding: [50, 50]});
+                if (rawData && rawData !== "") {
+                    var markers = JSON.parse(rawData);
+                    if (markers && markers.length > 0) {
+                        var group = new L.featureGroup();
+                        markers.forEach(function(loc) {
+                            var city = loc.city.replace(/_/g, ' ').replace(/-/g, ', ');
+                            var m = L.marker([loc.lat, loc.lng])
+                                     .addTo(map)
+                                     .bindPopup("<b>"+loc.artist+"</b><br>"+city);
+                            group.addLayer(m);
+                        });
+                        map.fitBounds(group.getBounds(), {padding: [50, 50]});
+                    }
                 }
-            } catch (e) { console.error("JSON Error", e); }
+            } catch (e) { console.error("Erreur de données :", e); }
         });
     </script>
 </body>
