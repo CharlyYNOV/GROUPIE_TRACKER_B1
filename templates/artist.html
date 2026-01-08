@@ -62,6 +62,14 @@
                 <p class="members-count">{{len .ArtistPage.Members}} member(s)</p>
                 <p class="first-album">First Album: {{ .ArtistPage.FirstAlbum }}</p>
             </div>
+            <div class="members-section">
+                <h3>Members</h3>
+                <div class="members-list">
+                    {{range .ArtistPage.Members}}
+                    <div class="member-item">{{.}}</div>
+                    {{end}}
+                </div>
+            </div>
         </div>
     </div>
 </body>
