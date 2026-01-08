@@ -3,8 +3,6 @@ package internals
 import (
 	"encoding/json"
 	"html/template"
-	"io"
-	"net/http"
 )
 
 // Dictionnaire complet de toutes les localisations de ton JSON
@@ -106,50 +104,23 @@ type MapMarker struct {
 	Lng    float64 `json:"lng"`
 }
 
-func Concerts(w http.ResponseWriter, r *http.Request) {
-	// 1. Récupération des Noms d'Artistes
-	respArt, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
-	if err != nil {
-		http.Error(w, "Erreur API Artists", http.StatusInternalServerError)
-		return
-	}
-	defer respArt.Body.Close()
-
-	var artists []struct {
-		ID   int    `json:"id"`
-		Name string `json:"name"`
-	}
-	bodyArt, _ := io.ReadAll(respArt.Body)
-	json.Unmarshal(bodyArt, &artists)
-
-	// Création d'un dictionnaire ID -> Nom
-	artMap := make(map[int]string)
-	for _, a := range artists {
-		artMap[a.ID] = a.Name
-	}
-
-	// 2. Récupération des Localisations
-	respLoc, err := http.Get("https://groupietrackers.herokuapp.com/api/locations")
-	if err != nil {
-		http.Error(w, "Erreur API Locations", http.StatusInternalServerError)
-		return
-	}
-	defer respLoc.Body.Close()
-
-	var locData struct {
-		Index []struct {
-			ID        int      `json:"id"`
-			Locations []string `json:"locations"`
-		} `json:"index"`
-	}
-	bodyLoc, _ := io.ReadAll(respLoc.Body)
-	json.Unmarshal(bodyLoc, &locData)
-
-	// 3. Fusion des données avec les coordonnées GPS
+// Cette fonction prépare le JSON pour le contrôleur
+func GetMarkersJSON() template.HTML {
 	var finalMarkers []MapMarker
-	for _, item := range locData.Index {
-		artistName := artMap[item.ID]
-		for _, locName := range item.Locations {
+
+	// On boucle sur les localisations déjà chargées dans ton package internals
+	for _, locItem := range Locations {
+		// On trouve le nom de l'artiste correspondant
+		var artistName string
+		for _, a := range Artists {
+			if a.Id == locItem.Id {
+				artistName = a.Name
+				break
+			}
+		}
+
+		// Pour chaque ville de cet artiste, on cherche ses coordonnées
+		for _, locName := range locItem.Locations {
 			if coords, ok := CityCoords[locName]; ok {
 				finalMarkers = append(finalMarkers, MapMarker{
 					Artist: artistName,
@@ -161,21 +132,6 @@ func Concerts(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// 4. Transformation en JSON pour le HTML
 	jsonData, _ := json.Marshal(finalMarkers)
-
-	// 5. Envoi au template
-	tmpl, err := template.ParseFiles("./templates/concerts.html")
-	if err != nil {
-		http.Error(w, "Template introuvable", http.StatusInternalServerError)
-		return
-	}
-
-	data := struct {
-		MarkersJSON template.HTML
-	}{
-		MarkersJSON: template.HTML(jsonData),
-	}
-
-	tmpl.Execute(w, data)
+	return template.HTML(jsonData)
 }

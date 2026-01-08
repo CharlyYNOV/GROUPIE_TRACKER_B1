@@ -14,10 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialisation de la carte
     var map = L.map('map').setView([20, 0], 2);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
-
     // Ajout des marqueurs
     if (Array.isArray(markers)) {
         markers.forEach(function(loc) {
