@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
      
     <style>
-        /* On s'assure que la map a une taille et ne cache pas le reste */
         #map { 
             height: 700px; 
             width: 95%; 
@@ -21,7 +20,6 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             z-index: 1; 
         }
-        /* Fix pour que ton menu reste cliquable */
         #container-groupie_title {
             position: relative;
             z-index: 1000;
@@ -36,18 +34,28 @@
                 <h1><a href="/">GROUPIE TRACKER</a></h1>
             </div>
             <div class="search-bar">
-                <form class="search-form" action="/search" method="POST">
-                    <div class="input-container">
-                        <input required placeholder="Search artists..." class="search-input" id="text-search" type="text" name="search-bar"/>
-                    </div>
-                    <button class="submit-button" type="submit">
-                        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="icon-submit">
-                            <path d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor"></path>
-                        </svg>
-                        <p>Search</p>
-                    </button>
-                </form>
-            </div>
+                    <form class="search-form" action="/search" method="POST">
+                        <div class="input-container">
+                            <input required placeholder="Search artists..." class="search-input" id="text-search" type="text" name="search-bar" list="suggestions-list" autocomplete="off"/>
+                    
+                            <datalist id="suggestions-list">
+                                {{range $artist := .Artists}}
+                                <option value="{{$artist.Name}}">{{$artist.Name}}</option>
+                                {{range $artist.Members}}
+                                <option value="{{.}}">{{.}} (member of {{$artist.Name}})</option>
+                                {{end}}
+                                {{end}}
+                            </datalist>
+                        </div>
+
+                        <button class="submit-button" type="submit">
+                            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="icon-submit">
+                                <path d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor"></path>
+                            </svg>
+                            <p>Search</p>
+                        </button>
+                    </form>
+                </div>
             <ul class="groupie_artists">
                 <li><a href="/" class="nav-link">Accueil</a></li>
                 <li><a href="/artists" class="nav-link">Artistes</a></li>
@@ -64,7 +72,7 @@
             var mapElement = document.getElementById('map');
             var rawData = mapElement.getAttribute('data-markers');
 
-            // Init Map (vue sur l'Europe)
+            // initialisation map
             var map = L.map('map').setView([40, 10], 3);
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -72,9 +80,7 @@
                 attribution: '&copy; OpenStreetMap'
             }).addTo(map);
 
-            // Petit délai pour éviter le bug d'affichage blanc
-            setTimeout(function(){ map.invalidateSize() }, 500);
-
+    
             try {
                 var markers = JSON.parse(rawData);
                 if (Array.isArray(markers)) {

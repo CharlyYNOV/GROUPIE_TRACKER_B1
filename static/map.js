@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const mapElement = document.getElementById('map');
     
-    // On récupère la chaîne JSON stockée dans le HTML
+    // recupérer données html
     const rawData = mapElement.getAttribute('data-markers');
     
     let markers = [];
@@ -11,14 +11,14 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error("Erreur de parsing des données concerts:", e);
     }
 
-    // Initialisation de la carte
+    // initialiser carte
     var map = L.map('map').setView([20, 0], 2);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
-    // Ajout des marqueurs
+    // marqueurs 
     if (Array.isArray(markers)) {
         markers.forEach(function(loc) {
             if (loc.lat !== 0) {
