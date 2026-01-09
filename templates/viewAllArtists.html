@@ -23,7 +23,8 @@
                     <form class="search-form" action="/search" method="POST">
                         <div class="input-container">
                             <input required placeholder="Search artists..." class="search-input" id="text-search" type="text" name="search-bar" list="suggestions-list" autocomplete="off" value="{{.SearchQuery}}"/>
-                            
+                            <a href="/artists" style="text-decoration: none; color: #666; font-size: 13px; margin-left: 10px; align-self: center;">
+                            Supprimer la recherche
                             <datalist id="suggestions-list">
                                 {{range $artist := .Artists}}
                                 <option value="{{$artist.Name}}">{{$artist.Name}}</option>
