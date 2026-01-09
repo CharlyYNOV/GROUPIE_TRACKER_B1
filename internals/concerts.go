@@ -105,10 +105,11 @@ type MapMarker struct {
 	Lng    float64 `json:"lng"`
 }
 
+// map markers
 func GetMarkersJSON(query string) template.HTML {
-	var finalMarkers []MapMarker
-	query = strings.ToLower(strings.TrimSpace(query))
+	var finalMarkers []MapMarker //empty list
 
+	//find the artist's name
 	for _, locItem := range Locations {
 		var artistName string
 		for _, a := range Artists {
@@ -118,10 +119,12 @@ func GetMarkersJSON(query string) template.HTML {
 			}
 		}
 
+		//find the artist in the search bar
 		if query != "" && !strings.Contains(strings.ToLower(artistName), query) {
 			continue
 		}
 
+		//add information for the marker
 		for _, locName := range locItem.Locations {
 			if coords, ok := CityCoords[locName]; ok {
 				finalMarkers = append(finalMarkers, MapMarker{
@@ -133,7 +136,9 @@ func GetMarkersJSON(query string) template.HTML {
 			}
 		}
 	}
-
+	//transform marker's list in text
 	jsonData, _ := json.Marshal(finalMarkers)
+
+	//send the text
 	return template.HTML(jsonData)
 }
