@@ -85,6 +85,7 @@ nav .groupie_artists .nav-link:hover {
 .back-grad {
   background: #40241f;
   background: linear-gradient(135deg,rgb(48, 31, 64) 0%, rgba(0, 0, 0, 1) 54%);
+  min-height: 100vh;
 }
 
 /* ==================================================

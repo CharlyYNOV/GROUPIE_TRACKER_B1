@@ -24,7 +24,8 @@
                     <form class="search-form" action="/search" method="POST">
                         <div class="input-container">
                             <input required placeholder="Search artists..." class="search-input" id="text-search" type="text" name="search-bar" list="suggestions-list" autocomplete="off"/>
-                    
+                            <a href="/artists" style="text-decoration: none; color: #666; font-size: 13px; margin-left: 10px; align-self: center;">
+                            Delete the research
                             <datalist id="suggestions-list">
                                 {{range $artist := .Artists}}
                                 <option value="{{$artist.Name}}">{{$artist.Name}}</option>
@@ -54,10 +55,10 @@
 
         <div class="artist-profile">
             <div class="artist-header">
-                <h2 class="artist-name">{{ .ArtistPage.Name }}</h2>
                 <img class="artist-image" src="{{ .ArtistPage.Image }}" alt="{{ .ArtistPage.Name }}">
             </div>
             <div class="artist-details">
+                <h2 class="artist-name">{{ .ArtistPage.Name }}</h2>
                 <p class="creation-date">Since {{ .ArtistPage.CreationDate }}</p>
                 <p class="first-album">First Album: {{ .ArtistPage.FirstAlbum }}</p>
                 <p class="members-count">{{ len .ArtistPage.Members }} member(s)</p>
