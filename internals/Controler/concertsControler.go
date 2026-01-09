@@ -13,8 +13,6 @@ func Concerts(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		return
 	}
-
-	// Récupération du terme de recherche (?search=...)
 	query := r.URL.Query().Get("search")
 
 	tmpl, err := template.ParseFiles("./templates/concerts.html")
@@ -23,8 +21,6 @@ func Concerts(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error while loading page", http.StatusInternalServerError)
 		return
 	}
-
-	// Génération du JSON filtré par Go
 	markers := internals.GetMarkersJSON(query)
 
 	data := struct {
