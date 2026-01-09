@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// Use to filtrate an artists list
 func FilterArtists(artists []Artist, input string) ([]Artist, bool) {
 	input = strings.ToLower(strings.TrimSpace(input))
 	if input == "" {
@@ -26,6 +27,7 @@ func FilterArtists(artists []Artist, input string) ([]Artist, bool) {
 	return filtered, true
 }
 
+// It allows to show us in real time the suggestions of what we write
 func GetSearchSuggestions(input string) []string {
 	input = strings.ToLower(strings.TrimSpace(input))
 	if input == "" {
@@ -33,13 +35,13 @@ func GetSearchSuggestions(input string) []string {
 	}
 
 	var suggestions []string
-	seen := make(map[string]bool)
+	seen := make(map[string]bool) // Seen allows to allocate memory to verificate if the input is recognized in the map
 
 	for _, artist := range Artists {
 		if strings.Contains(strings.ToLower(artist.Name), input) {
-			if !seen[artist.Name] {
+			if !seen[artist.Name] { // Otherwise it recognizes that's not in the list and he adds it
 				suggestions = append(suggestions, artist.Name)
-				seen[artist.Name] = true
+				seen[artist.Name] = true // In this case, it shows the name of the artist who you want to search
 			}
 		}
 	}
@@ -47,6 +49,7 @@ func GetSearchSuggestions(input string) []string {
 	return suggestions
 }
 
+// It manages the redirection of what we wrote
 func SearchBar(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
