@@ -25,7 +25,7 @@
                         <div class="input-container">
                             <input required placeholder="Search artists..." class="search-input" id="text-search" type="text" name="search-bar" list="suggestions-list" autocomplete="off"/>
                             <a href="/concerts" style="text-decoration: none; color: #666; font-size: 13px; margin-left: 10px; align-self: center;">
-                            Supprimer la recherche
+                            Delete the search
                             <datalist id="suggestions-list">
                                 {{range $artist := .Artists}}
                                 <option value="{{$artist.Name}}">{{$artist.Name}}</option>
@@ -45,9 +45,9 @@
                     </form>
                 </div>
             <ul class="groupie_artists">
-                <li><a href="/">Accueil</a></li>
-                <li><a href="/artists">Artistes</a></li>
-                <li><a href="/concerts">Évènements</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/artists">Artists</a></li>
+                <li><a href="/concerts">Events</a></li>
             </ul>
         </nav>
     </div>

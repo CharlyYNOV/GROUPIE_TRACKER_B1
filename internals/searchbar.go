@@ -4,13 +4,9 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"sort"
 	"strings"
 )
 
-// --- LES DEUX FONCTIONS QUI MANQUAIENT ---
-
-// FilterArtists filtre la liste des artistes selon l'entrée
 func FilterArtists(artists []Artist, input string) ([]Artist, bool) {
 	input = strings.ToLower(strings.TrimSpace(input))
 	if input == "" {
@@ -30,7 +26,6 @@ func FilterArtists(artists []Artist, input string) ([]Artist, bool) {
 	return filtered, true
 }
 
-// GetSearchSuggestions retourne des suggestions basées sur l'input
 func GetSearchSuggestions(input string) []string {
 	input = strings.ToLower(strings.TrimSpace(input))
 	if input == "" {
@@ -49,14 +44,8 @@ func GetSearchSuggestions(input string) []string {
 		}
 	}
 
-	sort.Strings(suggestions)
-	if len(suggestions) > 3 {
-		suggestions = suggestions[:3]
-	}
 	return suggestions
 }
-
-// --- TA FONCTION SEARCHBAR (DÉJÀ OK) ---
 
 func SearchBar(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
