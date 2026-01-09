@@ -4,17 +4,13 @@
     <meta charset="UTF-8">
     <title>Groupie Tracker - Évènements</title>
     <link rel="stylesheet" href="/css/accueil.css">
-    <link rel="stylesheet" href="/css/concerts.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <style>
-        #map { height: 700px; width: 95%; margin: 20px auto; border-radius: 15px; border: 2px solid #333; z-index: 1; }
-        #container-groupie_title { position: relative; z-index: 1000; }
-        /* Style de secours pour la barre si le CSS ne charge pas */
-        .search-form { display: flex; gap: 10px; justify-content: center; padding: 10px; }
+        #map { height: 700px; width: 95%; margin: 20px auto; border-radius: 15px}  /*style's map*/
     </style>
 </head>
-<body>
-    
+<body>  
+    <!-- up main menu-->
     <div id="container-groupie_title">
         <nav>
             <div class="groupie_title">
@@ -25,7 +21,7 @@
                         <div class="input-container">
                             <input required placeholder="Search artists..." class="search-input" id="text-search" type="text" name="search-bar" list="suggestions-list" autocomplete="off"/>
                             <a href="/concerts" style="text-decoration: none; color: #666; font-size: 13px; margin-left: 10px; align-self: center;">
-                            Delete the search
+                            Supprimer la recherche
                             <datalist id="suggestions-list">
                                 {{range $artist := .Artists}}
                                 <option value="{{$artist.Name}}">{{$artist.Name}}</option>
@@ -45,45 +41,42 @@
                     </form>
                 </div>
             <ul class="groupie_artists">
-                <li><a href="/">Home</a></li>
-                <li><a href="/artists">Artists</a></li>
-                <li><a href="/concerts">Events</a></li>
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/artists">Artistes</a></li>
+                <li><a href="/concerts">Évènements</a></li>
             </ul>
         </nav>
     </div>
+    
+    <!--end of up main menu -->
 
     <div id="map" data-markers="{{.MarkersJSON}}"></div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>  <!--Leaflet Api-->
+    
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
             var mapElement = document.getElementById('map');
-            var rawData = mapElement.getAttribute('data-markers');
-            
-            var map = L.map('map').setView([20, 0], 2);
+            var rawData = mapElement.getAttribute('data-markers'); //retrieve information from the go
+            var map = L.map('map').setView([20, 0], 2); //see map
+
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap'
-            }).addTo(map);
-
-            setTimeout(function(){ map.invalidateSize() }, 400);
+            }).addTo(map); //weird thing from the api to see the map
 
             try {
                 if (rawData && rawData !== "") {
                     var markers = JSON.parse(rawData);
                     if (markers && markers.length > 0) {
                         var group = new L.featureGroup();
-                        markers.forEach(function(loc) {
+                        markers.forEach(function(loc) { //prettier
                             var city = loc.city.replace(/_/g, ' ').replace(/-/g, ', ');
                             var m = L.marker([loc.lat, loc.lng])
                                      .addTo(map)
                                      .bindPopup("<b>"+loc.artist+"</b><br>"+city);
-                            group.addLayer(m);
                         });
-                        map.fitBounds(group.getBounds(), {padding: [50, 50]});
                     }
                 }
-            } catch (e) { console.error("Erreur de données :", e); }
-        });
+            } catch (e) { console.error("Erreur de chargement", e); }
     </script>
 </body>
 </html>
